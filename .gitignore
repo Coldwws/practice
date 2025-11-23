@@ -1,0 +1,12 @@
+
+/bin/
+/pkg/
+/*.exe
+*.log
+
+
+.vscode/
+.idea/
+
+
+.env
