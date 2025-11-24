@@ -7,12 +7,17 @@ import (
 
 	"github.com/Coldwws/todo/internal/handler"
 	"github.com/Coldwws/todo/internal/repository"
+	"github.com/joho/godotenv"
 )
 
 
 
 
 func main() {
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatalf("Ошибка при загрузке .env: %v", err)
+	}
 	mux := http.NewServeMux()
 	db,err := repository.NewPostgresDB()
 	if err!=nil{

@@ -2,21 +2,20 @@ package repository
 
 import (
 	"fmt"
+	"os"
 	_ "github.com/lib/pq"
 	"github.com/jmoiron/sqlx"
 )
 
 func NewPostgresDB() (*sqlx.DB,error){
 	
-	const(
-		host = "localhost"
-		port =  5432
-		user = "postgres"
-		password = "Edil3875319"
-		dbname = "practice-todo"
+	dsn := fmt.Sprintf("user=%s password=%s dbname=%s host=%s port=%s sslmode=disable",
+		os.Getenv("PG_USER"),
+		os.Getenv("PG_PASSWORD"),
+		os.Getenv("PG_NAME"),
+		os.Getenv("PG_HOST"),
+		os.Getenv("PG_PORT"),
 	)
-
-	dsn := fmt.Sprintf("host=%s port =%d user =%s password=%s dbname=%s sslmode=disable",host,port,user,password,dbname)
 
 	db,err := sqlx.Connect("postgres",dsn)
 	if err !=nil{
