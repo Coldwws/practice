@@ -17,14 +17,17 @@ func NewRoomPostgres(db *sqlx.DB) *RoomPostgres {
 	}
 }
 
-func(r *RoomPostgres)GetAllRooms()([]models.Room,error){
+func (r *RoomPostgres)GetAllRooms()([]models.Room,error){
 	var rooms []models.Room
-	query := `SELECT * FROM rooms`
+
+	query := `SELECT id,number,description,type FROM rooms`
 	err := r.db.Select(&rooms,query)
-	if err!=nil{
+
+	if err != nil{
 		return nil,err
 	}
 	return rooms,nil
+
 }
 
 
