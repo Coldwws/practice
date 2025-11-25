@@ -26,9 +26,9 @@ func main() {
 
 	roomHandler := handler.NewRoomHandler(repository.NewRoomPostgres(db))
 	mux.HandleFunc("/",roomHandler.GetRoom)
-	// mux.HandleFunc("/room/create",roomHandler.CreateRoom)
+	mux.HandleFunc("/room/create",roomHandler.CreateRoom)
 	// mux.HandleFunc("/room/delete",roomHandler.DeleteRoom)
-	// mux.HandleFunc("/room/update",roomHandler.UpdateRoom)
+	mux.HandleFunc("/room/update",roomHandler.UpdateRoom)
 
 	server := http.Server{
 		Addr: ":5050",
