@@ -1,0 +1,33 @@
+version: "3.9"
+
+
+services:
+  app:
+    build: .
+    container_name: practice-go-server
+    ports:
+      - "5050:5050"
+    depends_on:
+      - db
+    environment:
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_USER=edil
+      - DB_PASSWORD=password
+      - DB_NAME=docker_practice
+
+  db:
+    image: postgres:16
+    container_name: practice-postgres-db
+    restart: always
+    ports:
+      - "7777:5432"
+    environment:
+      - POSTGRES_USER=edil
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=docker_practice
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:
