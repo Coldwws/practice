@@ -8,14 +8,11 @@ import (
 	"github.com/Coldwws/todo/internal/handler"
 	"github.com/Coldwws/todo/internal/repository"
 	"github.com/Coldwws/todo/internal/service"
-	"github.com/joho/godotenv"
+
 )
 
 func main() {
-	err := godotenv.Load()
-	if err != nil {
-		log.Fatalf("Ошибка при загрузке .env: %v", err)
-	}
+
 
 	db,err := repository.NewPostgresDB()
 	if err!=nil{
@@ -29,7 +26,7 @@ func main() {
 	router := handler.InitRoutes()
 
 	server := http.Server{
-		Addr: ":5050",
+		Addr: "0.0.0.0:5050",
 		Handler : router,
 	}
 
