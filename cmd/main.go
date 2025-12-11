@@ -8,7 +8,6 @@ import (
 	"github.com/Coldwws/todo/internal/handler"
 	"github.com/Coldwws/todo/internal/repository"
 	"github.com/Coldwws/todo/internal/service"
-
 )
 
 func main() {
