@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"github.com/Coldwws/todo/internal/auth"
 	"github.com/Coldwws/todo/internal/service"
 	"github.com/gin-gonic/gin"
 )
@@ -15,19 +16,26 @@ func NewHandler(service service.RoomService) *Handler {
 	}
 }
 
-func (h *Handler)InitRoutes() *gin.Engine{
+func (h *Handler) InitRoutes() *gin.Engine {
 	router := gin.New()
 
 	router.Use(gin.Logger())
 	router.Use(gin.Recovery())
 
-	room := router.Group("/room")
+	authRoutes := router.Group("/auth")
 	{
-		room.GET("/",h.GetAllRooms)
-		room.GET("/:id",h.GetRoomById)
-		room.POST("/create",h.CreateRoom)
-		room.PATCH("/update/:id",h.UpdateRoom)
-		room.DELETE("/delete/:id",h.DeleteRoom)
+		authRoutes.POST("/login", h.login)
+	}
+	
+
+	room := router.Group("/room")
+	room.Use(auth.AuthRequired())
+	{
+		room.GET("/", h.GetAllRooms)
+		room.GET("/:id", h.GetRoomById)
+		room.POST("/create", h.CreateRoom)
+		room.PATCH("/update/:id", h.UpdateRoom)
+		room.DELETE("/delete/:id", h.DeleteRoom)
 	}
 
 	return router
