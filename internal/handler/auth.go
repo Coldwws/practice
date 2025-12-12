@@ -17,7 +17,8 @@ func (h *Handler) login(c *gin.Context){
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return
 		}
-		userID := 1
+		userID := 1 // Здесь должна быть логика аутентификации пользователя
+		
 		token,err := auth.GenerateToken(userID)
 		if err != nil{
 			c.JSON(http.StatusInternalServerError, gin.H{"error": "Could not generate token"})
