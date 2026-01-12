@@ -8,11 +8,13 @@ import (
 
 type Handler struct {
 	service service.RoomService
+	auth 	service.AuthService
 }
 
-func NewHandler(service service.RoomService) *Handler {
+func NewHandler(service service.RoomService, auth service.AuthService) *Handler {
 	return &Handler{
 		service: service,
+		auth:    auth,
 	}
 }
 
@@ -25,6 +27,7 @@ func (h *Handler) InitRoutes() *gin.Engine {
 	authRoutes := router.Group("/auth")
 	{
 		authRoutes.POST("/login", h.login)
+		authRoutes.POST("/register", h.register)
 	}
 	
 
