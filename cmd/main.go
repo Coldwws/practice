@@ -11,25 +11,28 @@ import (
 )
 
 func main() {
-
-
-	db,err := repository.NewPostgresDB()
-	if err!=nil{
-		log.Fatalf("Ошибка подключения к бд:",err)
+	db, err := repository.NewPostgresDB()
+	if err != nil {
+		log.Fatalf("Ошибка подключения к бд: %v", err)
 	}
 
-	storage := repository.NewRoomPostgres(db)
-	roomService := service.NewRoomService(storage)
-	handler := handler.NewHandler(roomService)
+	// repositories
+	roomRepo := repository.NewRoomPostgres(db)
+	userRepo := repository.NewUserPostgres(db)
 
-	router := handler.InitRoutes()
+	// services
+	roomService := service.NewRoomService(roomRepo)
+	authService := service.NewAuthService(userRepo)
+
+	// handlers
+	h := handler.NewHandler(roomService, authService)
+	router := h.InitRoutes()
 
 	server := http.Server{
-		Addr: "0.0.0.0:5050",
-		Handler : router,
+		Addr:    "0.0.0.0:5050",
+		Handler: router,
 	}
 
 	fmt.Println("Server started on :5050")
-	server.ListenAndServe()
-
+	log.Fatal(server.ListenAndServe())
 }
