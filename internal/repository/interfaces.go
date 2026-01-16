@@ -9,3 +9,8 @@ type RoomRepository interface {
 	UpdateRoom(id int, updateRoom models.UpdateRoom)(error)
 	DeleteRoom(id int)(int,error)
 }
+
+type UserRepository interface {
+	GetByUsername(username string) (*models.User, error)
+	Create(username, passwordHash string) error
+}
