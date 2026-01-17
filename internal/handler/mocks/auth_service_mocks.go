@@ -1,7 +1,6 @@
 package mocks
 
 
-
 type AuthServiceMock struct{
 	LoginFunc func(username,password string)(string,error)
 	RegisterFunc func(username,password string)error
